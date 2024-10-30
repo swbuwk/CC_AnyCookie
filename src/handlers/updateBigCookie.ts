@@ -1,6 +1,6 @@
 import { settings } from "../settings"
 
-export const updateBigCookie = () => {
+export const updateBigCookie = (notify?: boolean) => {
   const fileUrl = localStorage.getItem("anyCookieImage") || ""
   const url = settings.isFromFile ? fileUrl : settings.url
 
@@ -19,6 +19,11 @@ export const updateBigCookie = () => {
 
   image.src = url;
   image.setAttribute('crossorigin', 'anonymous');
+
+  image.onerror = (e) => {
+    Game.Notify("Image is blocked from this URL!", "Try downloading it as a file", [15, 5])
+    return
+  }
 
   image.onload = () => {
     canvas.width = image.width;
@@ -44,7 +49,12 @@ export const updateBigCookie = () => {
       const newHeight = image.height / sizeDiff
       const x = (canvas.width - newWidth) / 2
       const y = (canvas.height - newHeight) / 2
-      ctx.drawImage(image, x, y, canvas.width - x * 2, canvas.width - y * 2);
+      try{
+
+        ctx.drawImage(image, x, y, canvas.width - x * 2, canvas.width - y * 2);
+      } catch (e) {
+        console.log("ee", e)
+      }
     }
 
     const processedImage = new Image()
@@ -69,6 +79,7 @@ export const updateBigCookie = () => {
       Game.Loader.Replace("perfectCookie.png", canvas.toDataURL());
       Game.Loader.Replace("cookieShadow.png", "filler.png");
       settings.isDefaultImage = false
+      if (notify) Game.Notify(`New image set!`, "Looks wonderful!", [25, 7])
     }
   };
 }

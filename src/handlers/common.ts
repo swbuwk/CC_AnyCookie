@@ -13,7 +13,6 @@ export const handleSetImage = (newUrl: string, isFromFile: boolean) => {
     settings.url = newUrl
   }
   updateBigCookie()
-  Game.Notify(`New image set!`, "Looks wonderful!", [25, 7])
 }
 
 export const handleUploadesrToggle = (fileUploader: HTMLElement, linkUploader: HTMLElement) => {
