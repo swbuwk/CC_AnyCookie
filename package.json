@@ -1,0 +1,23 @@
+{
+  "name": "cookie-clicker-any-cookie",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "build-dev": "webpack",
+    "build": "webpack --env minimize"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.3",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@types/cookieclicker": "^2.52.5",
+    "image-js": "^0.35.6"
+  }
+}
