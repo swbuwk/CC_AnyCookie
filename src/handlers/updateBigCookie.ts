@@ -14,8 +14,8 @@ export const updateBigCookie = (notify?: boolean) => {
   const isRound = settings.roundImage
 
   const image = new Image();
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  let canvas = document.createElement("canvas");
+  let ctx = canvas.getContext("2d");
 
   image.src = url;
   image.setAttribute('crossorigin', 'anonymous');
@@ -49,23 +49,29 @@ export const updateBigCookie = (notify?: boolean) => {
       const newHeight = image.height / sizeDiff
       const x = (canvas.width - newWidth) / 2
       const y = (canvas.height - newHeight) / 2
-      try{
-
-        ctx.drawImage(image, x, y, canvas.width - x * 2, canvas.width - y * 2);
-      } catch (e) {
-        console.log("ee", e)
-      }
+      console.log(canvas.width, canvas.height, image.width, image.height, x, y)
+      ctx.drawImage(image, x, y, canvas.width - x * 2, canvas.width - y * 2);
     }
+
 
     const processedImage = new Image()
     processedImage.src = canvas.toDataURL()
 
-    ctx.reset();
+    // does not work on Steam
+    // ctx.reset();
+    canvas = document.createElement("canvas");
+    ctx = canvas.getContext("2d");
+
     processedImage.width = image.width;
     processedImage.height = image.width;
 
     processedImage.onload = () => {
       const w = image.width;
+      canvas.width = w;
+      canvas.height = w;
+
+      if (!ctx) return;
+
       if (Game.prefs.fancy) {
         ctx.shadowColor = "black";
         ctx.shadowBlur = 15;
