@@ -76,6 +76,10 @@ export const addSettings = () => {
     updateBigCookie()
     imageFitOption.innerHTML = `Image fit: ${settings.imageFit.toUpperCase()}`
     imageFitDescription.innerHTML = imageFitDescriptions[imageFitVariants.indexOf(settings.imageFit)]
+    const fileUploadPreview = l("fileUploadPreview")
+    if (fileUploadPreview) {
+      fileUploadPreview.style.objectFit = settings.imageFit
+    }
     PlaySound('snd/tick.mp3');
   }
 

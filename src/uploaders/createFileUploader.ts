@@ -7,8 +7,8 @@ export const createFileUploader = () => {
 
   const fileUploaderWrapper = document.createElement("div")
   fileUploaderWrapper.style.position = "relative"
-  fileUploaderWrapper.style.width = "185px"
   fileUploaderWrapper.style.display = "flex"
+  fileUploaderWrapper.style.width = "185px"
   fileUploaderWrapper.style.flexDirection = "column"
 
   const fileUploader = document.createElement("a")
