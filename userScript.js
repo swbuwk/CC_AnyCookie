@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Any Cookie
+// @name         Any Cookie skin
 // @namespace    http://tampermonkey.net/
 // @version      2024-10-25
 // @description  Big cookie skin manager! Made by @swbuwk
