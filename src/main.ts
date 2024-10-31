@@ -1,6 +1,5 @@
 import { addSettings } from "./handlers/addSettings";
 import { applySettings } from "./handlers/applySettings";
-import { updateBigCookie } from "./handlers/updateBigCookie";
 import { Settings, settings } from "./settings";
  
 const init = () => {
@@ -8,12 +7,6 @@ const init = () => {
   Game.UpdateMenu = () => {
     initUpdateMenu()
     addSettings()
-  }
-
-  const initToggleFancy = Game.ToggleFancy
-  Game.ToggleFancy = () => {
-    initToggleFancy()
-    updateBigCookie()
   }
 }
 

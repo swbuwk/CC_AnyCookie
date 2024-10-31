@@ -3,6 +3,7 @@ import { settings } from "../settings"
 import { createFileUploader } from "../uploaders/createFileUploader"
 import { createLinkUploader } from "../uploaders/createLinkUploader"
 import { handleUploadesrToggle } from "./common"
+import { createSettingsOptions } from "../utils/createSettingsOptions"
 
 export const addSettings = () => {
   if (!l("menu")?.childNodes?.length) return
@@ -21,7 +22,7 @@ export const addSettings = () => {
   settingsListing.className = "listing"
   // Settings section end
 
-  // URL buttons
+  // Switch button
   const switchButton = document.createElement("a")
   switchButton.id = "switchButton"
   switchButton.classList.add("smallFancyButton", "option")
@@ -39,61 +40,47 @@ export const addSettings = () => {
     PlaySound('snd/tick.mp3');
   }
 
-  const switchDescription = document.createElement("label")
-  switchDescription.innerHTML = `(note: file uploaded images is stored in your browser (localstorage), not in the game's save file!)`
+  const switchButtonDescription = document.createElement("label")
+  switchButtonDescription.innerHTML = `(note: file uploaded images is stored in your browser (localstorage), not in the game's save file!)`
   
   settingsListing.appendChild(switchButton)
-  settingsListing.appendChild(switchDescription)
+  settingsListing.appendChild(switchButtonDescription)
   settingsListing.appendChild(document.createElement("br"))
   settingsListing.appendChild(fileUploader)
   settingsListing.appendChild(linkUploader)
-  // URL buttons end
+  // Switch button end
 
   settingsListing.appendChild(document.createElement("br"))
 
   // Rounding button
-  const roundingSettingOption = document.createElement("a")
-  roundingSettingOption.id = "roundingSettingOption"
-  roundingSettingOption.classList.add("smallFancyButton", "option", "prefButton")
-  roundingSettingOption.classList.toggle("off", !settings.roundImage)
-  roundingSettingOption.innerHTML = `Round image (${settings.roundImage ? "ON" : "OFF"})`
-
-  roundingSettingOption.onclick = () => {
-    settings.roundImage = !settings.roundImage
-    updateBigCookie()
-    roundingSettingOption.innerHTML = `Round image (${settings.roundImage ? "ON" : "OFF"})`
-    roundingSettingOption.classList.toggle("off", !settings.roundImage)
+  const roundingSettingOption = createSettingsOptions("roundImage", "Round image", () => {
     const fileUploadCircleCover = l("fileUploadCircleCover")
     if (fileUploadCircleCover) {
       fileUploadCircleCover.style.display = settings.roundImage ? "block" : "none"
     }
-    PlaySound('snd/tick.mp3');
-  }
+  })
 
   settingsListing.appendChild(roundingSettingOption)
+  settingsListing.appendChild(document.createElement("br"))
   // Rounding button end
 
   // Save proportions button
-  const saveProportionsOption = document.createElement("a")
-  saveProportionsOption.id = "saveProportionsSettingOption"
-  saveProportionsOption.classList.add("smallFancyButton", "option", "prefButton")
-  saveProportionsOption.classList.toggle("off", !settings.saveProportions)
-  saveProportionsOption.innerHTML = `Save proportions (${settings.saveProportions ? "ON" : "OFF"})`
-
-  saveProportionsOption.onclick = () => {
-    settings.saveProportions = !settings.saveProportions
-    updateBigCookie()
-    saveProportionsOption.innerHTML = `Save proportions (${settings.saveProportions ? "ON" : "OFF"})`
-    saveProportionsOption.classList.toggle("off", !settings.saveProportions)
+  const saveProportionsOption = createSettingsOptions("saveProportions", "Save proportions", () => {
     const fileUploadPreview = l("fileUploadPreview")
     if (fileUploadPreview) {
       fileUploadPreview.style.objectFit = settings.saveProportions ? "contain" : "fill"
     }
-    PlaySound('snd/tick.mp3');
-  }
+  })
 
   settingsListing.appendChild(saveProportionsOption)
+  settingsListing.appendChild(document.createElement("br"))
   // Save proportions button end
+
+  // Drop shadow button
+  const dropShadowOption = createSettingsOptions("dropShadow", "Drop shadow")
+
+  settingsListing.appendChild(dropShadowOption)
+  // Drop shadow button end
 
   // Reset button
   const resetButton = document.createElement("a")

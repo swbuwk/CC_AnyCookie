@@ -49,7 +49,6 @@ export const updateBigCookie = (notify?: boolean) => {
       const newHeight = image.height / sizeDiff
       const x = (canvas.width - newWidth) / 2
       const y = (canvas.height - newHeight) / 2
-      console.log(canvas.width, canvas.height, image.width, image.height, x, y)
       ctx.drawImage(image, x, y, canvas.width - x * 2, canvas.width - y * 2);
     }
 
@@ -72,7 +71,7 @@ export const updateBigCookie = (notify?: boolean) => {
 
       if (!ctx) return;
 
-      if (Game.prefs.fancy) {
+      if (settings.dropShadow) {
         ctx.shadowColor = "black";
         ctx.shadowBlur = 15;
         ctx.shadowOffsetY = 10;

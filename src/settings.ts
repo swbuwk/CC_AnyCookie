@@ -4,6 +4,7 @@ export type Settings = {
   roundImage: boolean
   isDefaultImage: boolean
   saveProportions: boolean
+  dropShadow: boolean
 }
 
 export const settings: Settings = {
@@ -11,5 +12,6 @@ export const settings: Settings = {
   url: "",
   roundImage: false,
   isDefaultImage: true,
-  saveProportions: true
+  saveProportions: true,
+  dropShadow: true
 }
