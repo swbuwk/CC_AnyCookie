@@ -38,13 +38,16 @@ export const updateBigCookie = (notify?: boolean) => {
       ctx.clip()
     }
 
-    if (!settings.saveProportions) {
+    if (settings.imageFit === "fill") { 
       const w = image.width;
       image.height = w;
       ctx.drawImage(image, 0, 0, w, w);
     } else {
       const maxSide = Math.max(image.width, image.height)
-      const sizeDiff = maxSide / image.width
+      const minSide = Math.min(image.width, image.height)
+      const calcSize = settings.imageFit === "contain" ? maxSide : minSide
+      
+      const sizeDiff = calcSize / image.width
       const newWidth = image.width / sizeDiff
       const newHeight = image.height / sizeDiff
       const x = (canvas.width - newWidth) / 2

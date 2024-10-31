@@ -5,6 +5,12 @@ import { settings } from "../settings"
 export const createFileUploader = () => {
   const fileUrl = localStorage.getItem("anyCookieImage")
 
+  const fileUploaderWrapper = document.createElement("div")
+  fileUploaderWrapper.style.position = "relative"
+  fileUploaderWrapper.style.width = "185px"
+  fileUploaderWrapper.style.display = "flex"
+  fileUploaderWrapper.style.flexDirection = "column"
+
   const fileUploader = document.createElement("a")
   fileUploader.classList.add("smallFancyButton", "option")
   fileUploader.style.height = "138px"
@@ -26,7 +32,7 @@ export const createFileUploader = () => {
   fileUploadPreview.style.position = "absolute"
   fileUploadPreview.style.zIndex = "8"
   fileUploadPreview.style.display = fileUrl ? "block" : "none"
-  fileUploadPreview.style.objectFit = settings.saveProportions ? "contain" : "fill" 
+  fileUploadPreview.style.objectFit = settings.imageFit 
   fileUploadPreview.src = fileUrl || ""
 
   const circleCover = document.createElement("div")
@@ -70,6 +76,10 @@ export const createFileUploader = () => {
   fileInput.style.zIndex = "10"
   fileInput.id = "ACfileInput"
 
+  const fileUploaderDescription = document.createElement("label")
+  fileUploaderDescription.style.padding = "2px 0"
+  fileUploaderDescription.innerHTML = `(file update can take up to 5 seconds)`
+
   fileInput.onchange = (e: Event) => {
     const target: HTMLInputElement = e.target as HTMLInputElement
     const file = target?.files?.[0]
@@ -99,11 +109,16 @@ export const createFileUploader = () => {
     Game.Notify("Image removed!", "Here we go again", [10, 0])
   }
 
+  circleCover.appendChild(circleHole)
+
   fileUploader.appendChild(fileInput)
   fileUploader.appendChild(fileUploadPreview)
   fileUploader.appendChild(fileResetButton)
   fileUploader.appendChild(fileUploadTitle)
   fileUploader.appendChild(circleCover)
-  circleCover.appendChild(circleHole)
-  return fileUploader
+
+  fileUploaderWrapper.appendChild(fileUploader)
+  fileUploaderWrapper.appendChild(fileUploaderDescription)
+
+  return fileUploaderWrapper
 }

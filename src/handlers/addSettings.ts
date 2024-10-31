@@ -1,5 +1,5 @@
 import { updateBigCookie } from "./updateBigCookie"
-import { settings } from "../settings"
+import { imageFitDescriptions, imageFitVariants, settings } from "../settings"
 import { createFileUploader } from "../uploaders/createFileUploader"
 import { createLinkUploader } from "../uploaders/createLinkUploader"
 import { handleUploadesrToggle } from "./common"
@@ -42,7 +42,7 @@ export const addSettings = () => {
 
   const switchButtonDescription = document.createElement("label")
   switchButtonDescription.innerHTML = `(note: file uploaded images is stored in your browser (localstorage), not in the game's save file!)`
-  
+
   settingsListing.appendChild(switchButton)
   settingsListing.appendChild(switchButtonDescription)
   settingsListing.appendChild(document.createElement("br"))
@@ -64,17 +64,28 @@ export const addSettings = () => {
   settingsListing.appendChild(document.createElement("br"))
   // Rounding button end
 
-  // Save proportions button
-  const saveProportionsOption = createSettingsOptions("saveProportions", "Save proportions", () => {
-    const fileUploadPreview = l("fileUploadPreview")
-    if (fileUploadPreview) {
-      fileUploadPreview.style.objectFit = settings.saveProportions ? "contain" : "fill"
-    }
-  })
+  // Image fit button 
+  const imageFitOption = document.createElement("a")
+  imageFitOption.id = `imageFitSettingOption`
+  imageFitOption.classList.add("smallFancyButton", "option")
+  imageFitOption.innerHTML = `Image fit: ${settings.imageFit.toUpperCase()}`
 
-  settingsListing.appendChild(saveProportionsOption)
+  imageFitOption.onclick = () => {
+    const optionIndex = imageFitVariants.indexOf(settings.imageFit)
+    settings.imageFit = imageFitVariants[(optionIndex + 1) % imageFitVariants.length]
+    updateBigCookie()
+    imageFitOption.innerHTML = `Image fit: ${settings.imageFit.toUpperCase()}`
+    imageFitDescription.innerHTML = imageFitDescriptions[imageFitVariants.indexOf(settings.imageFit)]
+    PlaySound('snd/tick.mp3');
+  }
+
+  const imageFitDescription = document.createElement("label")
+  imageFitDescription.innerHTML = imageFitDescriptions[imageFitVariants.indexOf(settings.imageFit)]
+
+  settingsListing.appendChild(imageFitOption)
+  settingsListing.appendChild(imageFitDescription)
   settingsListing.appendChild(document.createElement("br"))
-  // Save proportions button end
+  // Image fit button end
 
   // Drop shadow button
   const dropShadowOption = createSettingsOptions("dropShadow", "Drop shadow")
